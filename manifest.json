@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "浏览器代理时区同步",
+  "version": "0.1.0",
+  "description": "根据代理出口 IP 或手动设置同步网页可见的浏览器时区。",
+  "permissions": ["storage", "alarms"],
+  "host_permissions": ["<all_urls>", "https://ipapi.com/*", "https://ipapi.co/*", "https://ipwho.is/*", "https://ipinfo.io/*", "https://worldtimeapi.org/*"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "浏览器代理时区同步",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["time-main.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}

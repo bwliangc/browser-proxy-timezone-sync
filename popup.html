@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>浏览器代理时区同步</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      width: 340px;
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    input[type="text"], select {
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      outline: none;
+      background: #020617;
+      color: #e5e7eb;
+    }
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+    }
+    button {
+      width: 100%;
+      height: 38px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 10px;
+      background: #38bdf8;
+      color: #082f49;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .card {
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.72);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .muted { color: #94a3b8; }
+    .success { color: #86efac; }
+    .error { color: #fca5a5; }
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>浏览器代理时区同步</h1>
+
+  <div class="row">
+    <span>启用时区伪装</span>
+    <input id="enabled" type="checkbox" />
+  </div>
+
+  <label for="mode">模式</label>
+  <select id="mode">
+    <option value="auto">根据出口 IP 自动匹配</option>
+    <option value="manual">手动指定时区</option>
+  </select>
+
+  <div id="manualTimeZoneField">
+    <label for="manualTimeZone">手动时区</label>
+    <input id="manualTimeZone" type="text" list="timezoneList" placeholder="Asia/Shanghai" />
+    <datalist id="timezoneList"></datalist>
+  </div>
+
+  <button id="refreshButton" type="button">刷新 IP 时区</button>
+
+  <div class="card">
+    <div>当前：<span id="effectiveTimeZone" class="mono">-</span></div>
+    <div>IP：<span id="ip" class="mono">-</span></div>
+    <div>来源：<span id="provider" class="mono">-</span></div>
+    <div id="status" class="muted">就绪</div>
+    <span id="autoTimeZone" hidden></span>
+    <span id="candidates" hidden></span>
+    <span id="location" hidden></span>
+    <span id="fetchedAt" hidden></span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
