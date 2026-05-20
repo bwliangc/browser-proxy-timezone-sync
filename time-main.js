@@ -11,6 +11,14 @@
   const nativeResolvedOptions = NativeIntlDateTimeFormat.prototype.resolvedOptions;
   const nativeGetTime = NativeDate.prototype.getTime;
   const nativeGetTimezoneOffset = NativeDate.prototype.getTimezoneOffset;
+  const nativeGetFullYear = NativeDate.prototype.getFullYear;
+  const nativeGetMonth = NativeDate.prototype.getMonth;
+  const nativeGetDate = NativeDate.prototype.getDate;
+  const nativeGetDay = NativeDate.prototype.getDay;
+  const nativeGetHours = NativeDate.prototype.getHours;
+  const nativeGetMinutes = NativeDate.prototype.getMinutes;
+  const nativeGetSeconds = NativeDate.prototype.getSeconds;
+  const nativeGetMilliseconds = NativeDate.prototype.getMilliseconds;
   const nativeToString = NativeDate.prototype.toString;
   const nativeToTimeString = NativeDate.prototype.toTimeString;
   const nativeToDateString = NativeDate.prototype.toDateString;
@@ -59,43 +67,43 @@
   };
 
   NativeDate.prototype.getFullYear = function () {
-    if (!isEnabled()) return nativeCall("getFullYear", this);
+    if (!isEnabled()) return nativeGetFullYear.call(this);
     return getParts(nativeGetTime.call(this), config.timeZone).year;
   };
 
   NativeDate.prototype.getMonth = function () {
-    if (!isEnabled()) return nativeCall("getMonth", this);
+    if (!isEnabled()) return nativeGetMonth.call(this);
     return getParts(nativeGetTime.call(this), config.timeZone).month - 1;
   };
 
   NativeDate.prototype.getDate = function () {
-    if (!isEnabled()) return nativeCall("getDate", this);
+    if (!isEnabled()) return nativeGetDate.call(this);
     return getParts(nativeGetTime.call(this), config.timeZone).day;
   };
 
   NativeDate.prototype.getDay = function () {
-    if (!isEnabled()) return nativeCall("getDay", this);
+    if (!isEnabled()) return nativeGetDay.call(this);
     const parts = getParts(nativeGetTime.call(this), config.timeZone);
     return new NativeDate(NativeDate.UTC(parts.year, parts.month - 1, parts.day)).getUTCDay();
   };
 
   NativeDate.prototype.getHours = function () {
-    if (!isEnabled()) return nativeCall("getHours", this);
+    if (!isEnabled()) return nativeGetHours.call(this);
     return getParts(nativeGetTime.call(this), config.timeZone).hour;
   };
 
   NativeDate.prototype.getMinutes = function () {
-    if (!isEnabled()) return nativeCall("getMinutes", this);
+    if (!isEnabled()) return nativeGetMinutes.call(this);
     return getParts(nativeGetTime.call(this), config.timeZone).minute;
   };
 
   NativeDate.prototype.getSeconds = function () {
-    if (!isEnabled()) return nativeCall("getSeconds", this);
+    if (!isEnabled()) return nativeGetSeconds.call(this);
     return getParts(nativeGetTime.call(this), config.timeZone).second;
   };
 
   NativeDate.prototype.getMilliseconds = function () {
-    if (!isEnabled()) return nativeCall("getMilliseconds", this);
+    if (!isEnabled()) return nativeGetMilliseconds.call(this);
     return new NativeDate(nativeGetTime.call(this)).getUTCMilliseconds();
   };
 
@@ -182,10 +190,6 @@
   function withTimeZone(options) {
     if (!shouldInjectTimeZone(options)) return options;
     return { ...(options || {}), timeZone: config.timeZone };
-  }
-
-  function nativeCall(method, date) {
-    return Function.call.call(NativeDate.prototype[method], date);
   }
 
   function getParts(epochMs, timeZone) {
