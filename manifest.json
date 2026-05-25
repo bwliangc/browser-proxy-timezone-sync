@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "浏览器代理时区同步",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "根据代理出口 IP 或手动设置同步网页可见的浏览器时区。",
   "permissions": ["storage", "alarms"],
   "host_permissions": ["<all_urls>", "https://ipapi.com/*", "https://ipapi.co/*", "https://ipwho.is/*", "https://ipinfo.io/*", "https://worldtimeapi.org/*"],
